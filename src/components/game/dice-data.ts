@@ -121,6 +121,28 @@ export const DICE: Dice[] = [
       "Comodín (cancela otro dado y elige)",
     ],
   },
+  {
+    id: 6,
+    name: "Peli",
+    emoji: "🎬",
+    description: "¿Qué vemos hoy?",
+    colorClass: "border-cyan-500 text-cyan-400",
+    glowClass: "shadow-cyan-500/30",
+    faces: [
+      "Comedia Romántica",
+      "Acción y Explosiones",
+      "Terror / Slasher",
+      "Ciencia Ficción / Distopía",
+      "Fantasía Épica / Aventura",
+      "Thriller Psicológico / Misterio",
+      "Comedia Absurda / Parodia",
+      "Basada en Hechos Reales / Biopic",
+      "Musical / Animación",
+      "Cine de Autor / Indie",
+      "Un Clásico",
+      "Ruleta Rusa: Play a lo primero que sugiera la plataforma",
+    ],
+  },
 ]
 
 // Devuelve un número de cara aleatorio entre 1 y 12
