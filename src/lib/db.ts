@@ -2,11 +2,25 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema";
 
-const connectionString = process.env.POSTGRES_URL as string;
+type Database = ReturnType<typeof drizzle<typeof schema>>;
 
-if (!connectionString) {
-  throw new Error("POSTGRES_URL environment variable is not set");
+function createDb(): Database {
+  const connectionString = process.env.POSTGRES_URL;
+  if (!connectionString) {
+    throw new Error("POSTGRES_URL environment variable is not set");
+  }
+  const client = postgres(connectionString);
+  return drizzle(client, { schema });
 }
 
-const client = postgres(connectionString);
-export const db = drizzle(client, { schema });
+// Lazy singleton: only connects when a query is actually executed
+let _db: Database | null = null;
+
+export const db = new Proxy({} as Database, {
+  get(_target, prop) {
+    if (!_db) {
+      _db = createDb();
+    }
+    return (_db as unknown as Record<string | symbol, unknown>)[prop];
+  },
+});
