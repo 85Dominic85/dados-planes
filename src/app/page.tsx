@@ -2,9 +2,9 @@
 
 import { useState, useCallback } from "react"
 import { DICE, rollFace } from "@/components/game/dice-data"
-import { SetupScreen } from "@/components/game/setup-screen"
-import { RollScreen, type DiceResult } from "@/components/game/roll-screen"
 import { ResultScreen } from "@/components/game/result-screen"
+import { RollScreen, type DiceResult } from "@/components/game/roll-screen"
+import { SetupScreen } from "@/components/game/setup-screen"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

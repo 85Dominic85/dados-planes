@@ -1,8 +1,8 @@
 "use client"
 
-import { DICE } from "./dice-data"
-import { Button } from "@/components/ui/button"
 import { Dices } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { DICE } from "./dice-data"
 
 interface SetupScreenProps {
   selectedDice: number[]

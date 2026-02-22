@@ -1,9 +1,9 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { DICE, getFaceText, rollFace } from "./dice-data"
+import { useEffect, useMemo, useState } from "react"
+import { Check, Lock, LockOpen, RotateCcw } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Lock, LockOpen, RotateCcw, Check } from "lucide-react"
+import { DICE, getFaceText, rollFace } from "./dice-data"
 
 export interface DiceResult {
   diceId: number
@@ -30,27 +30,27 @@ export function RollScreen({
   onReroll,
   onAccept,
 }: RollScreenProps) {
-  // Valores de display durante la animación (números que "ruedan")
-  const [displayFaces, setDisplayFaces] = useState<Record<number, number>>(
-    Object.fromEntries(results.map((r) => [r.diceId, r.face]))
+  // Random faces cycling during animation
+  const [animatingFaces, setAnimatingFaces] = useState<Record<number, number>>({})
+
+  // Real faces derived from results (no setState needed)
+  const realFaces = useMemo(
+    () => Object.fromEntries(results.map((r) => [r.diceId, r.face])),
+    [results]
   )
 
-  // Cuando llega una animación, ciclar números aleatorios y luego fijar los reales
+  // Only run interval during animation — no setState on the non-animating path
   useEffect(() => {
-    if (!isAnimating) {
-      setDisplayFaces(Object.fromEntries(results.map((r) => [r.diceId, r.face])))
-      return
-    }
+    if (!isAnimating) return
 
     const interval = setInterval(() => {
-      setDisplayFaces(
+      setAnimatingFaces(
         Object.fromEntries(results.map((r) => [r.diceId, rollFace()]))
       )
     }, 80)
 
     const timeout = setTimeout(() => {
       clearInterval(interval)
-      setDisplayFaces(Object.fromEntries(results.map((r) => [r.diceId, r.face])))
     }, 700)
 
     return () => {
@@ -58,6 +58,9 @@ export function RollScreen({
       clearTimeout(timeout)
     }
   }, [isAnimating, results])
+
+  // Display faces: use animating faces during animation, real faces otherwise
+  const displayFaces = isAnimating ? animatingFaces : realFaces
 
   function handleReroll() {
     const newResults: DiceResult[] = results.map((r) => ({
@@ -95,7 +98,6 @@ export function RollScreen({
           const isLocked = result.diceId === lockedDiceId
           const displayFace = displayFaces[result.diceId] ?? result.face
           // faceText always uses the real face value to avoid a flash of wrong text
-          // when animation ends before displayFaces resets
           const faceText = getFaceText(result.diceId, result.face)
 
           // Si hay un dado bloqueado y éste NO es el bloqueado, ocultamos el candado

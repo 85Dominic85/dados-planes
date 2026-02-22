@@ -1,9 +1,9 @@
 "use client"
 
+import { RotateCcw, Ticket } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { DICE, getFaceText } from "./dice-data"
 import type { DiceResult } from "./roll-screen"
-import { Button } from "@/components/ui/button"
-import { RotateCcw, Ticket } from "lucide-react"
 
 interface ResultScreenProps {
   results: DiceResult[]
