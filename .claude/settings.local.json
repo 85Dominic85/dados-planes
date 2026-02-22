@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
+      "Bash(npm run lint)",
+      "Bash(npm run typecheck:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_close",
+      "Bash(git add:*)",
+      "Bash(git log:*)",
+      "Bash(find:*)",
+      "Bash(git checkout:*)",
+      "Bash(cat:*)",
+      "Bash(pnpm run lint:*)",
+      "Bash(npx tsc:*)",
+      "Skill(commit-commands:commit-push-pr)",
+      "Skill(commit-commands:commit-push-pr:*)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "shadcn",
+    "playwright",
+    "next-devtools"
+  ]
+}
