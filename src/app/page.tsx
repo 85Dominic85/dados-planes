@@ -75,10 +75,10 @@ export default function GamePage() {
       isAnimating: true,
     }))
 
-    // Terminar la animación tras 750 ms
+    // Terminar la animación tras 4.5 s
     setTimeout(() => {
       setGame((prev) => ({ ...prev, isAnimating: false }))
-    }, 750)
+    }, 4500)
   }, [game.selectedDice])
 
   // ── Lock handler ───────────────────────────────────────────────────────────
@@ -110,7 +110,7 @@ export default function GamePage() {
 
     setTimeout(() => {
       setGame((prev) => ({ ...prev, isAnimating: false }))
-    }, 750)
+    }, 4500)
   }, [])
 
   // ── Accept handler ─────────────────────────────────────────────────────────

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react"
 import { Check, Lock, LockOpen, RotateCcw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DICE, getFaceText, rollFace } from "./dice-data"
+import { SpinningCubes } from "./spinning-cubes"
 
 export interface DiceResult {
   diceId: number
@@ -30,6 +31,12 @@ export function RollScreen({
   onReroll,
   onAccept,
 }: RollScreenProps) {
+  // Stable key derived from results to force cube remount on each roll
+  const cubeKey = useMemo(
+    () => results.map((r) => `${r.diceId}-${r.face}`).join(","),
+    [results]
+  )
+
   // Random faces cycling during animation
   const [animatingFaces, setAnimatingFaces] = useState<Record<number, number>>({})
 
@@ -51,7 +58,7 @@ export function RollScreen({
 
     const timeout = setTimeout(() => {
       clearInterval(interval)
-    }, 700)
+    }, 4400)
 
     return () => {
       clearInterval(interval)
@@ -90,6 +97,9 @@ export function RollScreen({
                 : "Dado bloqueado. Puedes re-tirar una vez los demás."}
         </p>
       </div>
+
+      {/* 3D spinning cubes during animation */}
+      {isAnimating && <SpinningCubes key={cubeKey} results={results} />}
 
       {/* Dice cards */}
       <div className="flex flex-col gap-3">
